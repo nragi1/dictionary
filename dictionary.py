@@ -22,9 +22,11 @@ def dictionary(word):
         response = requests.get(audio)
         with open(audio_file, "wb") as file:
             file.write(response.content)
+        print("Playing the pronunciation, please wait")
+        time.sleep(1)
         playsound(audio_file)
         print("Deleting audio file, please don't close the app")
-        time.sleep(3)
+        time.sleep(2)
         os.remove(audio_file)
         print("Audio file deleted")
         

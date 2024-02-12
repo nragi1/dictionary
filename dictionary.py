@@ -21,8 +21,10 @@ def dictionary(word):
         with open(audio_file, "wb") as file:
             file.write(response.content)
         playsound(audio_file)
-        time.sleep(5)
+        print("Deleting audio file, please don't close the app")
+        time.sleep(3)
         os.remove(audio_file)
+        print("Audio file deleted")
         
         
     elif response.status_code != 200:

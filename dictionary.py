@@ -2,6 +2,8 @@ import click
 import json
 import requests
 from playsound import playsound
+import os
+import time
 
 @click.command()
 @click.option('--word', prompt='Enter a word')
@@ -19,6 +21,9 @@ def dictionary(word):
         with open(audio_file, "wb") as file:
             file.write(response.content)
         playsound(audio_file)
+        time.sleep(5)
+        os.remove(audio_file)
+        
         
     elif response.status_code != 200:
         print("Sorry, there was an error. Please try again.")

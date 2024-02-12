@@ -16,19 +16,39 @@ def dictionary(word):
         data = response.json()
         print(f"Word: {word}")
         print(f"Meaning: {data[0]['meanings'][0]['definitions'][0]['definition']}")
+        
         # Play the pronunciation
         audio = data[0]['phonetics'][0]['audio']
         audio_file = f"{word}.mp3"
         response = requests.get(audio)
         with open(audio_file, "wb") as file:
             file.write(response.content)
+            
         print("Playing the pronunciation, please wait")
         time.sleep(1)
         playsound(audio_file)
-        print("Deleting audio file, please don't close the app")
-        time.sleep(2)
-        os.remove(audio_file)
-        print("Audio file deleted")
+        
+        while True:
+            user_input = input("Do you want to replay the audio file? (y/n)")
+            if user_input == "y":
+                print("Replaying the audio, please wait")
+                with open(audio_file, "wb") as file:
+                    file.write(response.content)
+                playsound(audio_file)
+                print("The audio can only be replayed once!")
+                print("Deleting audio file, please don't close the app")
+                os.remove(audio_file)
+                time.sleep(1)
+                print("Audio file deleted")
+                break
+            elif user_input == "n":    
+                print("Deleting audio file, please don't close the app")
+                os.remove(audio_file)
+                time.sleep(1)
+                print("Audio file deleted")
+                break
+            else:
+                print("Invalid input, please try again")
         
     # Error handling    
     elif response.status_code != 200:
@@ -41,3 +61,4 @@ def dictionary(word):
 if __name__ == '__main__':
     print("Welcome to my dictionary app!")
     dictionary()
+    

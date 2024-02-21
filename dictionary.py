@@ -28,6 +28,7 @@ def dictionary(word):
         time.sleep(1)
         playsound(audio_file)
         
+        # Allows the user to replay audio file once - problem with playsound library
         while True:
             user_input = input("Do you want to replay the audio file? (y/n)")
             if user_input == "y":
@@ -35,6 +36,7 @@ def dictionary(word):
                 with open(audio_file, "wb") as file:
                     file.write(response.content)
                 playsound(audio_file)
+                time.sleep(1)
                 print("The audio can only be replayed once!")
                 print("Deleting audio file, please don't close the app")
                 os.remove(audio_file)
